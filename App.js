@@ -29,6 +29,7 @@ const startTimer = () => {
     myInterval = setInterval(updateSeconds, 1000);
     startBtn.innerText = "pause";
     isPaused = false;
+    
 }
 
 const pauseTimer = () => {
@@ -49,3 +50,16 @@ const Timer = () => {
 }
 
 startBtn.addEventListener('click', Timer);
+
+const taskInput = document.getElementById('task');
+const taskList = document.getElementById('task-list');
+
+const addTask = () => {
+    const taskText = taskInput.value.trim();
+    if (taskText !== "") {
+        const taskItem = document.createElement('div');
+        taskItem.textContent = taskText;
+        taskList.appendChild(taskItem);
+        taskInput.value = ""; 
+    }
+}

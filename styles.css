@@ -102,3 +102,40 @@ html {
   button:hover {
     color: #db8534;
   }
+
+
+  
+  .task-input {
+    margin-top: 40px;
+    display: flex;
+    gap: 10px;
+    justify-content: left;
+    align-items: left;
+}
+
+.task-input button {
+    padding: 10px 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.task-input input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    width: 200px;
+}
+
+
+
+#task-list {
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: center;
+}
+
+#task-list div {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
