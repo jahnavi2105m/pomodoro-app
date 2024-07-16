@@ -4,13 +4,14 @@ const session = document.querySelector('.minutes');
 let myInterval; 
 let state = true;
 
+
 const Timer = () => {
     const sessionAmount = Number.parseInt(session.textContent);
 
     if(state) {
         state=false;
         let totalSeconds = sessionAmount*60;
-        
+        startBtn.innerText = "pause";
 
         const updateSeconds = () => {
             const minuteDiv = document.querySelector('.minutes');
@@ -38,8 +39,8 @@ const Timer = () => {
         myInterval = setInterval(updateSeconds, 1000);
     }
     else {
-        alert('Session already in progress');
-        
+        //alert('Session already in progress');
+        startBtn.innerText = "continue";
     }
     
     
