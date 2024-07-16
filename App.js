@@ -1,48 +1,51 @@
-const bells = new Audio('./sounds/bell.wav'); 
-const startBtn = document.querySelector('.start-button'); 
-const session = document.querySelector('.minutes'); 
-let myInterval; 
-let state = true;
+const bells = new Audio('./sounds/bell.wav');
+const startBtn = document.querySelector('.start-button');
+const session = document.querySelector('.minutes');
+const secondDiv = document.querySelector('.seconds');
+let myInterval;
+let isPaused = true;
+let totalSeconds;
 
+const updateDisplay = (seconds) => {
+    const minutesLeft = Math.floor(seconds / 60);
+    const secondsLeft = seconds % 60;
+    session.textContent = `${minutesLeft}`;
+    secondDiv.textContent = secondsLeft < 10 ? `0${secondsLeft}` : `${secondsLeft}`;
+}
+
+const updateSeconds = () => {
+    totalSeconds--;
+    updateDisplay(totalSeconds);
+
+    if (totalSeconds <= 0) {
+        bells.play();
+        clearInterval(myInterval);
+        startBtn.innerText = "start";
+        isPaused = true;
+    }
+}
+
+const startTimer = () => {
+    myInterval = setInterval(updateSeconds, 1000);
+    startBtn.innerText = "pause";
+    isPaused = false;
+}
+
+const pauseTimer = () => {
+    clearInterval(myInterval);
+    startBtn.innerText = "continue";
+    isPaused = true;
+}
 
 const Timer = () => {
-    const sessionAmount = Number.parseInt(session.textContent);
-
-    if(state) {
-        state=false;
-        let totalSeconds = sessionAmount*60;
-        startBtn.innerText = "pause";
-
-        const updateSeconds = () => {
-            const minuteDiv = document.querySelector('.minutes');
-            const secondDiv = document.querySelector('.seconds');
-
-            totalSeconds--;
-            let minutesLeft = Math.floor(totalSeconds/60);
-            let secondsLeft = totalSeconds%60;
-
-            if(secondsLeft<10){
-                secondDiv.textContent = '0' +secondsLeft;
-            }
-            else{
-                secondDiv.textContent = secondsLeft;
-            }
-
-            minuteDiv.textContent = `${minutesLeft}`;
-            
-            if(minutesLeft === 0 && secondsLeft === 0) {
-                bells.play()
-                clearInterval(myInterval);
-              }
+    if (isPaused) {
+        if (!totalSeconds) {
+            totalSeconds = Number.parseInt(session.textContent) * 60;
         }
-
-        myInterval = setInterval(updateSeconds, 1000);
+        startTimer();
+    } else {
+        pauseTimer();
     }
-    else {
-        //alert('Session already in progress');
-        startBtn.innerText = "continue";
-    }
-    
-    
 }
+
 startBtn.addEventListener('click', Timer);
